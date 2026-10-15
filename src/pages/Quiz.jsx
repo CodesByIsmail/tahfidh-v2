@@ -1,11 +1,33 @@
 import "../css/Quiz.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Quiz() {
   const [numOfQues, setNumOfQues] = useState(0);
   const [timeLimit, setLimit] = useState(5);
+  const [surahPicked, setSurahPicked] = useState('')
+  const [timerError, setTimerError] = useState("");
+
+  const [data, setData] = useState([]);
   const [error, setError] = useState("");
-  const  [allSurahs, setAllSurahs] = useState([])
+  const [loading, setloading] = useState("");
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch(
+          "https://api.qurani.ai/gw/qh/v1/surah?limit=2000&offset=0",
+        );
+        if (!res.ok) throw new Error("Network respons");
+        const resultData = await res.json();
+        console.log(resultData.data)
+        setData(resultData.data);
+      } catch (err) {
+        setError(err)
+      }
+    }
+
+    fetchData()
+  }, []);
 
   function handleNumQuestion(e) {
     if (!e.target.classList.contains("num__option")) return;
@@ -23,10 +45,10 @@ function Quiz() {
       setLimit((timeLimit) => {
         console.log(timeLimit);
         if (timeLimit === 5) {
-          setError("Min reached");
+          setTimerError("Min reached");
           return timeLimit;
         }
-        setError("");
+        setTimerError("");
         return timeLimit - 5;
       });
     }
@@ -35,13 +57,22 @@ function Quiz() {
       setLimit((timeLimit) => {
         console.log(timeLimit);
         if (timeLimit === 20) {
-          setError("Max reached");
+          setTimerError("Max reached");
           return timeLimit;
         }
-        setError("");
+        setTimerError("");
         return timeLimit + 5;
       });
     }
+  }
+
+  function handleSelectChange(e){
+    setSurahPicked(e.target.value)
+  }
+
+  function handleSubmit(e){
+    e.preventDefault();
+    
   }
 
   return (
@@ -49,11 +80,15 @@ function Quiz() {
       <h1 className="quiz__title">Take a Quiz</h1>
       <p className="quiz__description">Set up your session, then begin.</p>
 
-      <form className="quiz__form" action="quiz">
+      <form className="quiz__form" action="quiz" onSubmit={handleSubmit}>
         <div className="form__section">
           <h3 className="form__label">Surah</h3>
-          <select className="surah__select" name="Surah">
-            <option value="Faatiha">Al-Faatia</option>
+          <select onChange={handleSelectChange} className="surah__select" name="SurahPicked" value={surahPicked}>
+            {data.map((surah)=>{
+             return <option key={surah.number} value={surah.englishName}>
+                {surah.englishName}
+              </option>;
+            })}
           </select>
         </div>
 
@@ -88,7 +123,7 @@ function Quiz() {
               +
             </button>
           </div>
-          <p className="error__msg">{error}</p>
+          <p className="error__msg">{timerError}</p>
         </div>
 
         <p className="quiz__preview">

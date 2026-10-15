@@ -1,5 +1,6 @@
 import Btn from "../components/Btn";
 import Howitworks from "../components/Howitworks";
+import heroImage from '../assets/hero.jpg'
 
 import "../css/Home.css";
 function Home() {
@@ -16,6 +17,9 @@ function Home() {
             <Btn text={"Start a Quiz"} type={"primary"} />
             <Btn text={"How it Works"} type={"secondary"} />
           </div>
+        </div>
+        <div className="hero__img__container">
+          <img className="hero__img" src={heroImage} alt="hero-image" />
         </div>
       </div>
 

@@ -16,6 +16,7 @@ function Navbar() {
 
   return (
     <nav className="nav">
+      <button></button>
       <div className="nav__menu">
         <Link
           onClick={handleClick}
