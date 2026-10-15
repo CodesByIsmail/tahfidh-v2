@@ -1,5 +1,6 @@
-.btn__primary,
-.btn__secondary {
+
+/* Btn.jsx */
+.home__btn {
     border: 0;
     width: 100%;
     padding: 1rem;
@@ -7,6 +8,15 @@
     font: inherit;
     font-weight: 600;
     cursor: pointer;
+    box-sizing: border-box;
+    text-decoration: none;
+    text-align: center;
+    transition: 500ms;
+}
+
+.home__btn:hover{
+    transform: translateY(-3px);
+
 }
 
 .btn__primary {
@@ -14,12 +24,20 @@
     color: var(--accent-contrast);
 }
 
+
 .btn__secondary {
     background: rgba(255, 255, 255, 0.12);
     color: var(--primary-contrast);
     border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
+.btn__secondary:hover {
+    color: var(--primary);
+    background: var(--primary-contrast);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* Howitworks.jsx */
 
 .howitworks__container {
     display: flex;
@@ -38,11 +56,7 @@
 }
 
 .num__tag {
-    display: grid;
-    place-items: center;
-    flex: 0 0 2.5rem;
-    height: 2.5rem;
-    margin: 0;
+    padding: .3rem .6rem;
     border-radius: 50%;
     background: var(--surface-muted);
     color: var(--primary);

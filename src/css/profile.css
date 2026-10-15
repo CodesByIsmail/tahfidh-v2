@@ -1,0 +1,112 @@
+:root{
+    --btn--radius-lg: 10px;
+}
+
+.profile__page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+  gap: 1rem;
+}
+
+.welcome{
+    color: var(--primary);
+}
+
+
+.form__container{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 30rem;
+   width: 90%;
+   margin: 0 auto;
+}
+
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    background: var(--surface);
+    padding: 1rem;
+    border-radius: var(--btn--radius-lg);
+
+    button{
+        background: var(--primary);
+        padding: .5rem;
+        border-radius: var(--btn--radius-lg);
+        color: var(--primary-contrast);
+    }
+
+}
+
+.tab__switch{
+    background: var(--primary-contrast);
+    display: flex;
+    justify-content: space-around;
+    gap: .5rem;
+    padding: .5rem;
+    border-radius: var(--btn--radius-lg);
+
+
+}
+
+button{
+    border: none;
+    background: none;
+    cursor: pointer;
+        flex-grow: 1;
+
+}
+
+.tab__switchbtn{
+    background: none;
+    border: none;
+    padding: .5rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.tab__switchbtn--active{
+    background: var(--primary);
+    color: var(--primary-contrast);
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.308);
+}
+
+.input__div{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+
+    label{
+        color: var(--primary);
+        font-weight: 500;
+    }
+
+    input{
+        padding: .5rem;
+        border-radius: 3px;
+        border: 1px solid var(--input-border);
+        background: var(--input-bg);
+    }
+}
+
+.form__enquiry{
+    display: flex;
+    align-self: center;
+    gap: .3rem;
+}
+
+.switch__sec{
+    color: var(--primary);
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.switch__sec:hover{
+    text-decoration: underline;
+}

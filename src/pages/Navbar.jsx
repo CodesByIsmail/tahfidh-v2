@@ -20,7 +20,7 @@ function Navbar() {
         <Link
           onClick={handleClick}
           className="nav__list nav__list--active"
-          to="/home"
+          to="/"
         >
           <img src={HomeSvg} alt="home-icon" style={{ width: "24px" }} /> Home
         </Link>

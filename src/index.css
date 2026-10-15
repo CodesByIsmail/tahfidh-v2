@@ -3,6 +3,7 @@
   padding: 0;
 }
 :root {
+  --transition: 500ms;
   /* Surfaces */
 
   --bg: #f4faf6;
@@ -78,7 +79,7 @@
 }
 
 body {
-  background: var(--bg);
+  background: var(--surface-soft);
 }
 
 .container {

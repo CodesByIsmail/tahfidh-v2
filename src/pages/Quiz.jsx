@@ -5,6 +5,7 @@ function Quiz() {
   const [numOfQues, setNumOfQues] = useState(0);
   const [timeLimit, setLimit] = useState(5);
   const [error, setError] = useState("");
+  const  [allSurahs, setAllSurahs] = useState([])
 
   function handleNumQuestion(e) {
     if (!e.target.classList.contains("num__option")) return;
@@ -52,7 +53,7 @@ function Quiz() {
         <div className="form__section">
           <h3 className="form__label">Surah</h3>
           <select className="surah__select" name="Surah">
-            <option value="FAtiha">Al-Faatia</option>
+            <option value="Faatiha">Al-Faatia</option>
           </select>
         </div>
 
