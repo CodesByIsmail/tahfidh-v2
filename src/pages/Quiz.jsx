@@ -32,7 +32,6 @@ function Quiz() {
   function handleNumQuestion(e) {
     if (!e.target.classList.contains("num__option")) return;
     setNumOfQues(+e.target.innerHTML);
-    alert(`${numOfQues}`);
     const allQuesCounts = document.querySelectorAll(".num__option");
     allQuesCounts.forEach((span) =>
       span.classList.remove("num__option--active"),
@@ -72,7 +71,7 @@ function Quiz() {
 
   function handleSubmit(e){
     e.preventDefault();
-    
+
   }
 
   return (
