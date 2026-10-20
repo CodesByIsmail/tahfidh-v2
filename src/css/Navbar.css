@@ -1,6 +1,6 @@
 .nav {
-  height: 3rem;
-  margin-top: 6rem;
+  box-sizing: border-box;
+  height: 3.4rem;
   display: flex;
   align-items: center;
   position: fixed;
@@ -9,42 +9,52 @@
   left: 0;
   z-index: 100;
 
-  background-color: rgb(255, 255, 255);
-  padding: 1rem;
+  background-color: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 0.25rem 0.5rem;
 }
 
 .nav__menu {
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
 }
 
 .nav__list {
   text-decoration: none;
   display: flex;
   flex-direction: column;
+  flex: 1;
   align-items: center;
-  gap: 0.3rem;
-  color: rgb(80, 80, 80);
-  padding: 0.5rem;
-  border-radius: 5px;
+  gap: 0.1rem;
+  color: var(--text-subtle);
+  padding: 0.25rem 0.1rem;
+  border-radius: 0.75rem;
+  font-size: 0.65rem;
   transition: 500ms;
+
+}
+
+.nav__list img {
+  width: 20px;
 }
 
 .nav__list:hover {
-  background: rgba(0, 128, 0, 0.452);
+  background: var(--surface-muted);
 }
 
 .nav__list--active {
-  background: rgba(0, 128, 0, 0.233);
+  background: var(--primary-soft);
+  color: var(--primary);
+  box-shadow: 0px 2px 0px var(--primary);
 }
 
 @media screen and (min-width: 760px) {
-    .container{
-        width: 100%;
-
-    }
+  .container {
+    width: 100%;
+  }
   .wrapper {
     display: flex;
     justify-content: center;
@@ -54,6 +64,7 @@
 
   .nav {
     flex-grow: 1;
+    box-sizing: border-box;
     height: 100vh;
     margin-top: 0;
     display: flex;
@@ -66,7 +77,7 @@
     max-width: 10rem;
     z-index: 100;
 
-    background-color: rgb(255, 255, 255);
+    background-color: var(--surface);
     padding: 1rem;
   }
 
@@ -75,6 +86,16 @@
     gap: 1rem;
     height: 100%;
     justify-content: flex-start;
+  }
+
+  .nav__list {
+    flex: 0;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    width: 100%;
+    font-size: 0.9rem;
+    border-radius: 3px;
   }
 
   .nav.hidden {

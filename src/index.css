@@ -79,10 +79,21 @@
 }
 
 body {
-  background: var(--surface-soft);
+  background: var(--bg);
+  height: 100vh;
+  #root{
+    height: 100%;
+  }
 }
 
 .container {
   width: 90%;
   margin: 0 auto;
+}
+
+.btn{
+  padding: 1rem ;
+  background: var(--primary);
+  border-radius: 10px;
+  color: var(--primary-contrast);
 }

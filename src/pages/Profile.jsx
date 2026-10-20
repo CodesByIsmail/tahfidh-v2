@@ -1,31 +1,57 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useForm } from "react-hook-form";
 import "../css/profile.css";
+import { AuthContext } from "../context/AuthContext";
+
 function Profile() {
-  const [curTab, setCurTab] = useState("signin");
+  const [curTab, setCurTab] = useState("login");
+  const { signUp } = useContext(AuthContext);
+  const [authRes, setAuthRes] = useState({});
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   function handleTabSwitch(e) {
     setCurTab(e.target.dataset.tab);
   }
+
+  function onSubmit(data) {
+    console.log(data);
+    if (curTab === "signup") {
+      const res = signUp(data.fullname, data.email, data.password);
+      setAuthRes(() => res);
+      console.log(res);
+    }
+  }
+
   return (
     <div className="profile__page">
       <h1 className="welcome">Welcome</h1>
       <p className="info">
-        Sign in to save your quiz history and track progress
+        Log In to save your quiz history and track progress
       </p>
 
       <div className="form__container">
         <div className="tab__switch">
           <button
             className={
-              curTab === "signin" && "tab__switchbtn--active tab__switchbtn"
+              curTab === "login"
+                ? "tab__switchbtn--active tab__switchbtn"
+                : "tab__switchbtn"
             }
             onClick={handleTabSwitch}
-            data-tab="signin"
+            data-tab="login"
           >
-            Sign In
+            Log In
           </button>
           <button
             className={
-              curTab === "signup" && "tab__switchbtn--active tab__switchbtn"
+              curTab === "signup"
+                ? "tab__switchbtn--active tab__switchbtn"
+                : "tab__switchbtn"
             }
             onClick={handleTabSwitch}
             data-tab="signup"
@@ -34,48 +60,71 @@ function Profile() {
           </button>
         </div>
 
-        <form action="signup/signin">
+        <form action="auth" onSubmit={handleSubmit(onSubmit)}>
           {curTab === "signup" && (
             <>
+              <span
+                className={`auth__msg auth__msg${authRes.success ? "--success" : "--fail"} `}
+              >
+                {authRes.errroMsg}
+              </span>
+
               <div className="input__div">
                 <label htmlFor="fullname">Full Name</label>
-                <input type="text" placeholder="Your name" />
+                <input
+                  type="text"
+                  placeholder="Your name"
+                  {...register("fullname", {
+                    required: "Your name is required",
+                  })}
+                />
+                {errors.fullname && (
+                  <span className="input__error">
+                    {errors.fullname.message}
+                  </span>
+                )}
               </div>
-              <div className="input__div">
-                <label htmlFor="email">Email</label>
-                <input type="text" placeholder="you@example.com" />
-              </div>
-              <div className="input__div">
-                <label htmlFor="password">Password</label>
-                <input type="text" placeholder="At least 8 characters" />
-              </div>
-              <button type="submit">Sign Up</button>
-              <p className="form__enquiry">
-                Already have an account?{" "}
-                <span
-                  className="switch__sec"
-                  data-tab="signin"
-                  onClick={handleTabSwitch}
-                >
-                  Sign In
-                </span>
-              </p>
             </>
           )}
-
-          {curTab === "signin" && (
-            <>
-              <div className="input__div">
-                <label htmlFor="email">Email</label>
-                <input type="text" placeholder="you@example.com" />
-              </div>
-              <div className="input__div">
-                <label htmlFor="password">Password</label>
-                <input type="text" placeholder="At least 8 characters" />
-              </div>
-              <button type="submit">Sign In</button>
-              <p className="form__enquiry">
-                Don't have an account?{" "}
+          <div className="input__div">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              placeholder="you@example.com"
+              {...register("email", { required: "Email is required" })}
+            />
+            {errors.email && (
+              <span className="input__error">{errors.email.message}</span>
+            )}
+          </div>
+          <div className="input__div">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              placeholder="At least 8 characters"
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
+                maxLength: {
+                  value: 8,
+                  message: "Password must be less 8 characters",
+                },
+              })}
+            />
+            {errors.password && (
+              <span className="input__error">{errors.password.message}</span>
+            )}
+          </div>
+          <button type="submit">
+            {curTab === "signup" ? "Sign Up" : "Log In"}
+          </button>
+          <p className="form__enquiry">
+            {curTab === "login" ? (
+              <>
+                Don't have an account?
                 <span
                   className="switch__sec"
                   data-tab="signup"
@@ -83,9 +132,20 @@ function Profile() {
                 >
                   Sign Up
                 </span>
-              </p>
-            </>
-          )}
+              </>
+            ) : (
+              <>
+                Already have an account?
+                <span
+                  className="switch__sec"
+                  data-tab="login"
+                  onClick={handleTabSwitch}
+                >
+                  Log In
+                </span>
+              </>
+            )}
+          </p>
         </form>
       </div>
     </div>

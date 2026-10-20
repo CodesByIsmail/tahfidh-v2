@@ -1,7 +1,7 @@
 {
   "name": "quiz-app",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -12,6 +12,7 @@
   "dependencies": {
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
+    "react-hook-form": "^7.90.0",
     "react-router-dom": "^7.18.4"
   },
   "devDependencies": {

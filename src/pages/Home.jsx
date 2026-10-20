@@ -1,13 +1,18 @@
+import { useContext } from "react";
 import Btn from "../components/Btn";
 import Howitworks from "../components/Howitworks";
-import heroImage from '../assets/hero.jpg'
+import heroImage from "../assets/hero.jpg";
+import { AuthContext } from "../context/AuthContext";
 
 import "../css/Home.css";
 function Home() {
+  const { user } = useContext(AuthContext);
+
   return (
     <main className="home">
       <div className="hero">
         <div className="hero__left">
+          <h1>Welcome {user}</h1>
           <p className="tag__line">Quran Hifdh Practice</p>
           <h2 className="hero__title">Test what you have memorized</h2>
           <p className="hero__description">

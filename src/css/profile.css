@@ -77,6 +77,23 @@ button{
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.308);
 }
 
+.auth__msg{
+    padding: .8rem .5rem;
+    border-radius: 5px;
+    color: var(--primary);
+}
+
+.auth__msg--success{
+    background: var(--primary-soft);
+
+}
+
+.auth__msg--fail{
+    background: var(--danger-bg);
+    color: var(--danger-text);
+
+}
+
 .input__div{
     display: flex;
     flex-direction: column;
@@ -89,9 +106,14 @@ button{
 
     input{
         padding: .5rem;
-        border-radius: 3px;
+        border-radius: var(--btn--radius-lg);
         border: 1px solid var(--input-border);
         background: var(--input-bg);
+    }
+
+    .input__error{
+        font-size: 12px;
+        color: var(--danger-text);
     }
 }
 
