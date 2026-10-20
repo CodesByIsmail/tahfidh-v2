@@ -12,7 +12,7 @@ function Home() {
     <main className="home">
       <div className="hero">
         <div className="hero__left">
-          <h1>Welcome {user}</h1>
+          <h1>Welcome {user ? user.fullname : ''}</h1>
           <p className="tag__line">Quran Hifdh Practice</p>
           <h2 className="hero__title">Test what you have memorized</h2>
           <p className="hero__description">
