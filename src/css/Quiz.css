@@ -150,3 +150,7 @@
   font-weight: 600;
   cursor: pointer;
 }
+
+.quiz__start:disabled{
+  opacity: 0.5;
+}

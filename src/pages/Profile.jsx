@@ -5,7 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 
 function Profile() {
   const [curTab, setCurTab] = useState("login");
-  const { signUp, Login, user } = useContext(AuthContext);
+  const { signUp, Login, user, isAuth } = useContext(AuthContext);
   const [authRes, setAuthRes] = useState({ isAuth: false });
   const [loading, setLoading] = useState(false);
   const [loadTime, setLoadTime] = useState(5);
@@ -29,8 +29,8 @@ function Profile() {
     setLoading(true);
 
     if (curTab === "signup") {
-      const res = signUp(data.fullname, data.email, data.password);
       setTimeout(() => {
+        const res = signUp(data.fullname, data.email, data.password);
         setAuthRes(() => res);
         Login(data.email, data.password);
         authRes.success && setCurTab("login");
@@ -40,8 +40,8 @@ function Profile() {
     }
 
     if (curTab === "login") {
-      const res = Login(data.email, data.password)
       setTimeout(() => {
+        const res = Login(data.email, data.password)
         setAuthRes(() => res);
         setLoading(false);
       }, loadTime * 1000);
@@ -50,7 +50,7 @@ function Profile() {
 
   return (
     <div className="profile__page">
-      {authRes.isAuth && (
+      {isAuth && (
         <>
           <h1>Assalamu Alaykum {user ? user.fullname.split(' ')[0] : ""}</h1>
 
@@ -63,7 +63,7 @@ function Profile() {
         </>
 
       )}
-      {!authRes.isAuth && (
+      {!isAuth && (
         <>
           <h1 className="welcome">Welcome </h1>
           <p className="info">

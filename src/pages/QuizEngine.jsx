@@ -1,6 +1,11 @@
 import '../css/QuizEngine.css'
+import { AuthContext } from "../context/AuthContext";
+import { useContext } from 'react';
 
 function QuizEngine() {
+    const {quizInfo} =useContext(AuthContext)
+    console.log(quizInfo)
+
     return (
         <div className='quiz__engine'>
             <div className="top__bar__container">

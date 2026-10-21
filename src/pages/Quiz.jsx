@@ -1,15 +1,23 @@
 import "../css/Quiz.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { AuthContext } from "../context/AuthContext";
+import Btn from "../components/Btn";
+import { Link } from "react-router-dom";
 
 function Quiz() {
-  const [numOfQues, setNumOfQues] = useState(0);
+  const [numOfQues, setNumOfQues] = useState(5);
   const [timeLimit, setLimit] = useState(5);
-  const [surahPicked, setSurahPicked] = useState('')
+  const [surahPicked, setSurahPicked] = useState("Al-Faathia");
   const [timerError, setTimerError] = useState("");
 
   const [data, setData] = useState([]);
+
   const [error, setError] = useState("");
   const [loading, setloading] = useState("");
+  const [quizInfo, setQuizInfo] = useState({});
+
+  const { saveQuizInfo, isAuth } = useContext(AuthContext);
 
   useEffect(() => {
     async function fetchData() {
@@ -19,14 +27,14 @@ function Quiz() {
         );
         if (!res.ok) throw new Error("Network respons");
         const resultData = await res.json();
-        console.log(resultData.data)
+        console.log(resultData.data);
         setData(resultData.data);
       } catch (err) {
-        setError(err)
+        setError(err);
       }
     }
 
-    fetchData()
+    fetchData();
   }, []);
 
   function handleNumQuestion(e) {
@@ -65,28 +73,45 @@ function Quiz() {
     }
   }
 
-  function handleSelectChange(e){
-    setSurahPicked(e.target.value)
+  function handleSelectChange(e) {
+    setSurahPicked(e.target.value);
   }
 
-  function handleSubmit(e){
+  function handleSubmit(e) {
     e.preventDefault();
-
+    const info = { surahPicked, timeLimit, numOfQues };
+    setQuizInfo(() => info);
+    console.log(info);
+    setloading(true);
+    setTimeout(() => {
+      saveQuizInfo(info);
+      setloading(false);
+    }, 5000);
   }
 
   return (
     <div className="quiz__page">
       <h1 className="quiz__title">Take a Quiz</h1>
-      <p className="quiz__description">Set up your session, then begin.</p>
+      <p className="quiz__description">
+        Set up your session, then begin.{" "}
+        {!isAuth ? `Login to save your progress` : ""}
+      </p>
 
       <form className="quiz__form" action="quiz" onSubmit={handleSubmit}>
         <div className="form__section">
           <h3 className="form__label">Surah</h3>
-          <select onChange={handleSelectChange} className="surah__select" name="SurahPicked" value={surahPicked}>
-            {data.map((surah)=>{
-             return <option key={surah.number} value={surah.englishName}>
-                {surah.englishName}
-              </option>;
+          <select
+            onChange={handleSelectChange}
+            className="surah__select"
+            name="SurahPicked"
+            value={surahPicked}
+          >
+            {data.map((surah) => {
+              return (
+                <option key={surah.number} value={surah.englishName}>
+                  {surah.englishName}
+                </option>
+              );
             })}
           </select>
         </div>
@@ -126,16 +151,16 @@ function Quiz() {
         </div>
 
         <p className="quiz__preview">
-          <span className="preview__text preview__surah">Al-faathia</span>
+          <span className="preview__text preview__surah">{surahPicked}</span>
           <span className="preview__text preview__numofques">
-            5 <span>questions</span>
+            {numOfQues} <span>questions</span>
           </span>
           <span className="preview__text preview__time__limit">
-            10 <span>minutes</span>
+            {timeLimit} <span>minutes</span>
           </span>
         </p>
 
-        <button className="quiz__start" type="submit">
+        <button className="quiz__start" disabled={loading} type="submit">
           Start Quiz
         </button>
       </form>

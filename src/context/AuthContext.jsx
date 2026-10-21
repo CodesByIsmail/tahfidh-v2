@@ -1,9 +1,12 @@
 import { createContext, useState } from "react";
+import { set } from "react-hook-form";
 
 export const AuthContext = createContext(null);
 
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [isAuth, setIsAuth] = useState(false)
+  const [quizInfo, setQuizInfo] = useState({})
 
   function signUp(fullname, email, password) {
     const users = JSON.parse(localStorage.getItem("users") || "[]");
@@ -32,11 +35,17 @@ function AuthProvider({ children }) {
     }
 
     setUser(() => curUser);
+    setIsAuth(true)
     return { success: true, isAuth: true };
   }
 
+  function saveQuizInfo(info){
+    console.log(info)
+    setQuizInfo(()=>info)
+  }
+
   return (
-    <AuthContext.Provider value={{ signUp, user, Login }}>
+    <AuthContext.Provider value={{ signUp, user, Login, saveQuizInfo, quizInfo, isAuth }}>
       {children}
     </AuthContext.Provider>
   );
