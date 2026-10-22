@@ -14,7 +14,7 @@ function Quiz() {
   const [data, setData] = useState([]);
 
   const [error, setError] = useState("");
-  const [loading, setloading] = useState("");
+  const [loading, setloading] = useState(false);
   const [quizInfo, setQuizInfo] = useState({});
 
   const { saveQuizInfo, isAuth } = useContext(AuthContext);

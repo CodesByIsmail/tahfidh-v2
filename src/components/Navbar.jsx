@@ -4,10 +4,18 @@ import HomeSvg from "../assets/home.svg";
 import takequizsvg from "../assets/quiz.svg";
 import resultsvg from "../assets/result.svg";
 import usersvg from "../assets/user.svg";
+import logoImage from "../assets/logo.png";
+
 
 function Navbar() {
   return (
     <nav className="nav">
+       <img
+        className="app__logo"
+        src={logoImage}
+        alt="Tahfidh"
+      />
+
       <div className="nav__menu">
         <NavLink
           className={({ isActive }) =>

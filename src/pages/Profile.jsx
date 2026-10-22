@@ -5,8 +5,8 @@ import { AuthContext } from "../context/AuthContext";
 
 function Profile() {
   const [curTab, setCurTab] = useState("login");
-  const { signUp, Login, user, isAuth } = useContext(AuthContext);
-  const [authRes, setAuthRes] = useState({ isAuth: false });
+  const { signUp, Login, user, isAuth, setIsAuth, setUser } = useContext(AuthContext);
+  const [authRes, setAuthRes] = useState(null);
   const [loading, setLoading] = useState(false);
   const [loadTime, setLoadTime] = useState(5);
 
@@ -20,10 +20,6 @@ function Profile() {
     setCurTab(e.target.dataset.tab);
   }
 
-  useEffect(() => {
-    authRes.success && setCurTab("login");
-  }, [authRes.success]);
-
   function onSubmit(data) {
     console.log(data);
     setLoading(true);
@@ -32,27 +28,46 @@ function Profile() {
       setTimeout(() => {
         const res = signUp(data.fullname, data.email, data.password);
         setAuthRes(() => res);
-        Login(data.email, data.password);
         authRes.success && setCurTab("login");
         console.log(res);
-        setLoading(false);
       }, loadTime * 1000);
+
+      setTimeout(
+        () => {
+          Login(data.email, data.password);
+          localStorage.setItem("isAuth", authRes.isAuth);
+
+          setLoading(false);
+        },
+        loadTime * 2 * 1000,
+      );
     }
 
     if (curTab === "login") {
       setTimeout(() => {
-        const res = Login(data.email, data.password)
+        const res = Login(data.email, data.password);
+        localStorage.setItem("isAuth", authRes.isAuth);
+
         setAuthRes(() => res);
         setLoading(false);
       }, loadTime * 1000);
     }
   }
 
+  function autoAuth() {
+    setIsAuth(() => localStorage.getItem("isAuth" || isAuth));
+    setUser(() => JSON.parse(localStorage.getItem("curUser")));
+
+    console.log(user);
+  }
+
+  window.addEventListener("load", autoAuth);
+
   return (
     <div className="profile__page">
       {isAuth && (
         <>
-          <h1>Assalamu Alaykum {user ? user.fullname.split(' ')[0] : ""}</h1>
+          <h1>Assalamu Alaykum {user ? user.fullname.split(" ")[0] : ""}</h1>
 
           <div className="profiles__ingo">
             <div>
@@ -61,7 +76,6 @@ function Profile() {
             </div>
           </div>
         </>
-
       )}
       {!isAuth && (
         <>
@@ -158,7 +172,9 @@ function Profile() {
                 )}
               </div>
               <button className="form__btn" disabled={loading} type="submit">
-                {curTab === "signup" ? "Sign Up" : "Log In"}
+                {curTab === "signup"
+                  ? `${loading ? "Connecting ..." : "Sign Up"}`
+                  : `${loading ? "Connecting ..." : "Log In"}`}
               </button>
               <p className="form__enquiry">
                 {curTab === "login" ? (

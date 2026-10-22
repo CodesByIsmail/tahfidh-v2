@@ -6,7 +6,6 @@ import Quiz from "./pages/Quiz";
 import Result from "./pages/Result";
 import Profile from "./pages/Profile";
 import QuizEngine from "./pages/QuizEngine";
-import logoImage from "./assets/logo.png";
 
 import "./App.css";
 import AuthProvider from "./context/AuthContext";
@@ -15,11 +14,7 @@ function App() {
   return (
 <AuthProvider>
       <div className="container">
-      <img
-        className="app__logo"
-        src={logoImage}
-        alt="Tahfidh"
-      />
+     
       <div className="wrapper">
         <Navbar />
 
