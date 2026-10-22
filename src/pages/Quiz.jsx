@@ -11,9 +11,9 @@ function Quiz() {
   const [surahPicked, setSurahPicked] = useState("Al-Faathia");
   const [timerError, setTimerError] = useState("");
 
-  const [data, setData] = useState([]);
-
+  const [surahs, setSurahs] = useState([]);
   const [error, setError] = useState("");
+
   const [loading, setloading] = useState(false);
   const [quizInfo, setQuizInfo] = useState({});
 
@@ -22,15 +22,18 @@ function Quiz() {
   useEffect(() => {
     async function fetchData() {
       try {
+        setloading(true);
         const res = await fetch(
           "https://api.qurani.ai/gw/qh/v1/surah?limit=2000&offset=0",
         );
         if (!res.ok) throw new Error("Network respons");
         const resultData = await res.json();
         console.log(resultData.data);
-        setData(resultData.data);
+        setSurahs(resultData.data);
       } catch (err) {
         setError(err);
+      } finally {
+        setloading(false);
       }
     }
 
@@ -78,15 +81,10 @@ function Quiz() {
   }
 
   function handleSubmit(e) {
-    e.preventDefault();
     const info = { surahPicked, timeLimit, numOfQues };
     setQuizInfo(() => info);
     console.log(info);
-    setloading(true);
-    setTimeout(() => {
-      saveQuizInfo(info);
-      setloading(false);
-    }, 5000);
+    saveQuizInfo(info);
   }
 
   return (
@@ -97,7 +95,11 @@ function Quiz() {
         {!isAuth ? `Login to save your progress` : ""}
       </p>
 
-      <form className="quiz__form" action="quiz" onSubmit={handleSubmit}>
+      <form
+        className="quiz__form"
+        action="take-quiz/quiz"
+        onSubmit={handleSubmit}
+      >
         <div className="form__section">
           <h3 className="form__label">Surah</h3>
           <select
@@ -106,7 +108,7 @@ function Quiz() {
             name="SurahPicked"
             value={surahPicked}
           >
-            {data.map((surah) => {
+            {surahs.map((surah) => {
               return (
                 <option key={surah.number} value={surah.englishName}>
                   {surah.englishName}

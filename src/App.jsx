@@ -12,23 +12,24 @@ import AuthProvider from "./context/AuthContext";
 
 function App() {
   return (
-<AuthProvider>
+    <AuthProvider>
       <div className="container">
-     
-      <div className="wrapper">
-        <Navbar />
+        <div className="wrapper">
+          <Navbar />
 
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/take-quiz" element={<Quiz />}></Route>
-          <Route path="/results" element={<Result />}></Route>
-          <Route path="/profile" element={<Profile />}></Route>
-          <Route path="/quiz" element={<QuizEngine />}></Route>
-        </Routes>
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="take-quiz">
+              <Route index element={<Quiz />}></Route>
+              <Route path="quiz" element={<QuizEngine />}></Route>
+            </Route>
+            <Route path="/results" element={<Result />}></Route>
+            <Route path="/profile" element={<Profile />}></Route>
+          </Routes>
+        </div>
       </div>
-    </div>
-  </AuthProvider>
-  )
+    </AuthProvider>
+  );
 }
 
 export default App;

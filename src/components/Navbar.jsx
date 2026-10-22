@@ -13,7 +13,7 @@ function Navbar() {
        <img
         className="app__logo"
         src={logoImage}
-        alt="Tahfidh"
+        alt="Tahfidh Logo"
       />
 
       <div className="nav__menu">
