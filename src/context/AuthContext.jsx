@@ -26,9 +26,9 @@ function AuthProvider({ children }) {
   function Login(email, password) {
     const users = JSON.parse(localStorage.getItem("users") || "[]");
 
-    const curUser = JSON.parse(localStorage.getItem("curUser") )|| users.find(
-      (u) => u.email === email && u.password === password,
-    );
+    const curUser =
+      JSON.parse(localStorage.getItem("curUser")) ||
+      users.find((u) => u.email === email && u.password === password);
     if (!curUser) {
       return {
         success: false,
@@ -38,14 +38,30 @@ function AuthProvider({ children }) {
 
     localStorage.setItem("curUser", JSON.stringify(curUser));
 
-
     setUser(() => curUser);
 
-    const authed = true;
-    setIsAuth(authed);
-    localStorage.setItem("isAuth", authed);
+    setIsAuth(true);
+    localStorage.setItem("isAuth", isAuth);
 
     return { success: true, isAuth: true };
+  }
+
+  function Logout() {
+    localStorage.removeItem("curUser");
+    setIsAuth(false);
+    console.log("Logged out");
+    return {
+      success: true,
+      isAuth: false,
+      errorMsg: "Successfully logged out",
+    };
+
+    // setUser(null)
+  }
+
+  function autoAuth() {
+    setIsAuth(() => JSON.parse(localStorage.getItem("isAuth" || isAuth)));
+    setUser(() => JSON.parse(localStorage.getItem("curUser")));
   }
 
   function saveQuizInfo(info) {
@@ -55,7 +71,18 @@ function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ signUp, user, Login, saveQuizInfo, quizInfo, isAuth, setIsAuth , setUser}}
+      value={{
+        signUp,
+        user,
+        Login,
+        saveQuizInfo,
+        quizInfo,
+        isAuth,
+        setIsAuth,
+        setUser,
+        Logout,
+        autoAuth,
+      }}
     >
       {children}
     </AuthContext.Provider>

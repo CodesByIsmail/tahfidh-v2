@@ -128,3 +128,12 @@ button {
 .switch__sec:hover {
   text-decoration: underline;
 }
+
+.logout__btn{
+  background: var(--primary);
+  color: var(--primary-contrast);
+}
+
+.logout__btn:disabled{
+  opacity: 0.5;
+}

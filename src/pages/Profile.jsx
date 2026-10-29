@@ -5,7 +5,9 @@ import { AuthContext } from "../context/AuthContext";
 
 function Profile() {
   const [curTab, setCurTab] = useState("login");
-  const { signUp, Login, user, isAuth, setIsAuth, setUser } = useContext(AuthContext);
+  const { signUp, Login, user, isAuth, Logout, autoAuth } =
+    useContext(AuthContext);
+  const [response, setResponse] = useState(null);
   const [authRes, setAuthRes] = useState(null);
   const [loading, setLoading] = useState(false);
   const [loadTime, setLoadTime] = useState(5);
@@ -23,42 +25,62 @@ function Profile() {
   function onSubmit(data) {
     console.log(data);
     setLoading(true);
+    let result;
 
     if (curTab === "signup") {
-      setTimeout(() => {
-        const res = signUp(data.fullname, data.email, data.password);
-        setAuthRes(() => res);
-        authRes.success && setCurTab("login");
-        console.log(res);
-      }, loadTime * 1000);
+      signUserUp(data);
+    }
 
-      setTimeout(
-        () => {
-          Login(data.email, data.password);
-          localStorage.setItem("isAuth", authRes.isAuth);
+    async function signUserUp(data) {
+      try {
+        setResponse(null);
+        await timeout(5);
+        result = signUp(data.fullname, data.email, data.password);
+        if (!result.success) throw new Error(result.errorMsg);
+        await logUserIn(data);
+      } catch (err) {
+      } finally {
+        setResponse(result);
+        setLoading(false);
+      }
+    }
 
-          setLoading(false);
-        },
-        loadTime * 2 * 1000,
-      );
+    async function logUserIn(data) {
+      try {
+        setResponse(null);
+
+        localStorage.setItem("isAuth", isAuth);
+        await timeout(5);
+        result = Login(data.email, data.password);
+        console.log(isAuth);
+        if (!result.success) throw new Error(result.errorMsg);
+      } catch (err) {
+      } finally {
+        console.log(result);
+        setResponse(result);
+        setLoading(false);
+      }
     }
 
     if (curTab === "login") {
-      setTimeout(() => {
-        const res = Login(data.email, data.password);
-        localStorage.setItem("isAuth", authRes.isAuth);
-
-        setAuthRes(() => res);
-        setLoading(false);
-      }, loadTime * 1000);
+      logUserIn(data);
     }
   }
 
-  function autoAuth() {
-    setIsAuth(() => localStorage.getItem("isAuth" || isAuth));
-    setUser(() => JSON.parse(localStorage.getItem("curUser")));
+ async function logUserOut(){
+    try{
+      setLoading(true)
+      await timeout(5)
+      Logout();
+    } finally{
+      setLoading(false)
+    }
+  }
 
-    console.log(user);
+  function timeout(sec) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, sec * 1000);
+    });
   }
 
   window.addEventListener("load", autoAuth);
@@ -75,6 +97,10 @@ function Profile() {
               <p>Personal Info, Profile Picture, Password</p>
             </div>
           </div>
+
+          <button className="logout__btn" onClick={logUserOut} disabled={loading} type="submit">
+            {loading ? "Connecting" : "Logout"}
+          </button>
         </>
       )}
       {!isAuth && (
@@ -111,11 +137,11 @@ function Profile() {
             </div>
 
             <form action="auth" onSubmit={handleSubmit(onSubmit)}>
-              {authRes && (
+              {response && (
                 <span
-                  className={`auth__msg auth__msg${authRes.success ? "--success" : "--fail"} `}
+                  className={`auth__msg auth__msg${response.success ? "--success" : "--fail"} `}
                 >
-                  {authRes.errorMsg}
+                  {response.errorMsg}
                 </span>
               )}
               {curTab === "signup" && (
