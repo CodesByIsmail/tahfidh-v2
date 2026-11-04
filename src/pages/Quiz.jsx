@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 function Quiz() {
   const [numOfQues, setNumOfQues] = useState(5);
   const [timeLimit, setLimit] = useState(5);
-  const [surahPicked, setSurahPicked] = useState("Al-Faathia");
+  const [surahPicked, setSurahPicked] = useState("");
   const [timerError, setTimerError] = useState("");
 
   const [surahs, setSurahs] = useState([]);
@@ -81,6 +81,7 @@ function Quiz() {
   }
 
   function handleSubmit(e) {
+    e.preventDefault()
     const info = { surahPicked, timeLimit, numOfQues };
     setQuizInfo(() => info);
     console.log(info);

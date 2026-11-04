@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext(null);
 
@@ -6,6 +7,8 @@ function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isAuth, setIsAuth] = useState(false);
   const [quizInfo, setQuizInfo] = useState({});
+
+  const navigate = useNavigate()
 
   function signUp(fullname, email, password) {
     const users = JSON.parse(localStorage.getItem("users") || "[]");
@@ -41,7 +44,7 @@ function AuthProvider({ children }) {
     setUser(() => curUser);
 
     setIsAuth(true);
-    localStorage.setItem("isAuth", isAuth);
+    navigate('/')
 
     return { success: true, isAuth: true };
   }
@@ -60,7 +63,7 @@ function AuthProvider({ children }) {
   }
 
   function autoAuth() {
-    setIsAuth(() => JSON.parse(localStorage.getItem("isAuth" || isAuth)));
+    setIsAuth(() => JSON.parse(localStorage.getItem("isAuth") || isAuth));
     setUser(() => JSON.parse(localStorage.getItem("curUser")));
   }
 

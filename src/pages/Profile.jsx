@@ -11,6 +11,11 @@ function Profile() {
   const [authRes, setAuthRes] = useState(null);
   const [loading, setLoading] = useState(false);
   const [loadTime, setLoadTime] = useState(5);
+  const LOAD_SEC = 5;
+
+    useEffect(() => {
+      autoAuth();
+    }, []);
 
   const {
     register,
@@ -34,7 +39,7 @@ function Profile() {
     async function signUserUp(data) {
       try {
         setResponse(null);
-        await timeout(5);
+        await timeout(LOAD_SEC);
         result = signUp(data.fullname, data.email, data.password);
         if (!result.success) throw new Error(result.errorMsg);
         await logUserIn(data);
@@ -49,10 +54,10 @@ function Profile() {
       try {
         setResponse(null);
 
-        localStorage.setItem("isAuth", isAuth);
-        await timeout(5);
+        await timeout(LOAD_SEC);
         result = Login(data.email, data.password);
-        console.log(isAuth);
+
+        localStorage.setItem("isAuth", result.success);
         if (!result.success) throw new Error(result.errorMsg);
       } catch (err) {
       } finally {
@@ -67,13 +72,13 @@ function Profile() {
     }
   }
 
- async function logUserOut(){
-    try{
-      setLoading(true)
-      await timeout(5)
+  async function logUserOut() {
+    try {
+      setLoading(true);
+      await timeout(LOAD_SEC);
       Logout();
-    } finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -83,7 +88,7 @@ function Profile() {
     });
   }
 
-  window.addEventListener("load", autoAuth);
+
 
   return (
     <div className="profile__page">
@@ -98,7 +103,12 @@ function Profile() {
             </div>
           </div>
 
-          <button className="logout__btn" onClick={logUserOut} disabled={loading} type="submit">
+          <button
+            className="logout__btn"
+            onClick={logUserOut}
+            disabled={loading}
+            type="submit"
+          >
             {loading ? "Connecting" : "Logout"}
           </button>
         </>

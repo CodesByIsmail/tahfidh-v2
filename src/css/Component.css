@@ -1,78 +1,91 @@
-
 /* Btn.jsx */
 .home__btn {
-    border: 0;
-    width: 100%;
-    padding: 1rem;
-    border-radius: 1rem;
-    font: inherit;
-    font-weight: 600;
-    cursor: pointer;
-    box-sizing: border-box;
-    text-decoration: none;
-    text-align: center;
-    transition: 500ms;
+  border: 0;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 1rem;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  box-sizing: border-box;
+  text-decoration: none;
+  text-align: center;
+  transition: 500ms;
 }
 
-.home__btn:hover{
-    transform: translateY(-3px);
-
+.home__btn:hover {
+  transform: translateY(-3px);
 }
 
 .btn__primary {
-    background: var(--accent);
-    color: var(--accent-contrast);
+  background: var(--accent);
+  color: var(--accent-contrast);
 }
 
-
 .btn__secondary {
-    background: rgba(255, 255, 255, 0.12);
-    color: var(--primary-contrast);
-    border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--primary-contrast);
+  border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 .btn__secondary:hover {
-    color: var(--primary);
-    background: var(--primary-contrast);
-    border: 1px solid rgba(255, 255, 255, 0.6);
+  color: var(--primary);
+  background: var(--primary-contrast);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.btn__intermediate {
+  text-decoration: none;
+  width: 100%;
+  text-align: center;
+  padding: 0.8rem;
+}
+
+.btn__quick {
+  padding: 0.5rem;
+  background: var(--primary-soft);
+  border-radius: 20px;
+  color: var(--primary);
+  font-weight: 500;
+  text-decoration: none;
 }
 
 /* Howitworks.jsx */
 
 .howitworks__container {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .howitworks {
-    background: var(--surface);
-    display: flex;
-    align-items: center;
-    padding: .7rem;
-    border: 1px solid var(--border);
-    border-radius: 1.25rem;
-    gap: 1rem;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  padding: 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  gap: 1rem;
 }
 
 .num__tag {
-    padding: .3rem .6rem;
-    border-radius: 50%;
-    background: var(--surface-muted);
-    color: var(--primary);
-    font-size: 0.9rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 50%;
+  background: var(--surface-muted);
+  color: var(--primary);
+  font-size: 0.9rem;
 }
 
 .howitworks__info {
-    min-width: 0;
+  min-width: 0;
 }
 
 .title {
-    color: var(--text);
-    font-size: 1rem;
+  color: var(--text);
+  font-size: 1rem;
 }
 
 .howitworks__para {
-    color: var(--text-muted);
-    line-height: 1.4;
+  color: var(--text-muted);
+  line-height: 1.4;
 }

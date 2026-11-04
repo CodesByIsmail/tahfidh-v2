@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import TopBar from "./components/TopBar";
 import Home from "./pages/Home";
 import Quiz from "./pages/Quiz";
 import Result from "./pages/Result";
@@ -16,7 +17,7 @@ function App() {
       <div className="container">
         <div className="wrapper">
           <Navbar />
-
+          <TopBar />
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="take-quiz">

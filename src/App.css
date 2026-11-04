@@ -1,0 +1,30 @@
+.app__logo {
+  width: 100px;
+}
+
+.topbar {
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.avatar {
+  background: var(--primary);
+  padding: 0.5rem 1rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  span {
+    color: var(--primary-contrast);
+    font-weight: 500;
+  }
+}
+
+@media screen and (min-width: 760px) {
+  .topbar {
+    display: none;
+  }
+}

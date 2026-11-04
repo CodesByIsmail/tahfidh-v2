@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 :root {
   --transition: 500ms;
@@ -81,7 +82,7 @@
 body {
   background: var(--bg);
   height: 100vh;
-  #root{
+  #root {
     height: 100%;
   }
 }
@@ -91,8 +92,8 @@ body {
   margin: 0 auto;
 }
 
-.btn{
-  padding: 1rem ;
+.btn {
+  padding: 1rem;
   background: var(--primary);
   border-radius: 10px;
   color: var(--primary-contrast);
