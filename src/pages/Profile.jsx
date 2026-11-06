@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import "../css/profile.css";
 import { AuthContext } from "../context/AuthContext";
+import { LOAD_SEC, timeout } from "../config";
 
 function Profile() {
   const [curTab, setCurTab] = useState("login");
@@ -11,11 +12,11 @@ function Profile() {
   const [authRes, setAuthRes] = useState(null);
   const [loading, setLoading] = useState(false);
   const [loadTime, setLoadTime] = useState(5);
-  const LOAD_SEC = 5;
 
-    useEffect(() => {
-      autoAuth();
-    }, []);
+
+  useEffect(() => {
+    autoAuth();
+  }, []);
 
   const {
     register,
@@ -80,12 +81,6 @@ function Profile() {
     } finally {
       setLoading(false);
     }
-  }
-
-  function timeout(sec) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, sec * 1000);
-    });
   }
 
 

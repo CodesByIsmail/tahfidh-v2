@@ -31,16 +31,17 @@ function Result() {
   ]);
 
   function handleExpande(e) {
-    console.log(e.target.closest("article").dataset.number);
-    const elNeeded = e.target.closest("article");
-    const toBeExtended = reviewQuestions.find(
-      (ques) => ques.number === +elNeeded.dataset.number,
+    const article = e.target.closest("article");
+    if (!article) return;
+
+    const selectedNumber = Number(article.dataset.number);
+    setReviewQuestions((currentQuestions) =>
+      currentQuestions.map((question) =>
+        question.number === selectedNumber
+          ? { ...question, expanded: !question.expanded }
+          : question,
+      ),
     );
-    console.log(toBeExtended);
-    toBeExtended.expanded = !toBeExtended.expanded;
-    setReviewQuestions((reviewQuestions) => {
-      return [...reviewQuestions]
-    })
   }
 
   return (
@@ -107,7 +108,7 @@ function Result() {
       </div>
 
       <div className="after__review__buttons">
-        <Link to="/quiz" className="restart-button">
+        <Link to="/take-quiz" className="restart-button">
           Restart Quiz
         </Link>
         <Link to="/take-quiz" className="new-quiz-button">

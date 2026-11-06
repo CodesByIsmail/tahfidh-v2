@@ -10,15 +10,17 @@ function Home() {
 
   useEffect(() => {
     autoAuth();
-  }, []);
+  }, [autoAuth]);
+
+  const userFirstName = user?.fullname?.split(" ")[0] || "friend";
 
   return (
     <main className="home">
-      {isAuth && (
+      {isAuth && user && (
         <>
           <div className="hero">
             <div className="hero__left">
-              <h1>AsSalaamu Alaykum {user.fullname.split(" ")[0]}</h1>
+              <h1>AsSalaamu Alaykum {userFirstName}</h1>
               <p>
                 Ready for today’s revision? Pick a surah and test your hifdh.
               </p>
@@ -131,7 +133,7 @@ function Home() {
         <>
           <div className="hero">
             <div className="hero__left">
-              <h1>Welcome {isAuth ? user.fullname : ""}</h1>
+              <h1>Welcome {isAuth && user ? user.fullname : ""}</h1>
               <p className="tag__line">Quran Hifdh Practice</p>
               <h2 className="hero__title">Test what you have memorized</h2>
               <p className="hero__description">

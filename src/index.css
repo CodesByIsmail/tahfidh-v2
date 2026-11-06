@@ -98,3 +98,21 @@ body {
   border-radius: 10px;
   color: var(--primary-contrast);
 }
+
+.spinner {
+  font-size: 2rem;
+  animation: spin infinite 500ms;
+}
+
+.spinner-md{
+  font-size: 1rem;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}

@@ -1,14 +1,14 @@
 import "../css/Quiz.css";
 import { useContext, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { AuthContext } from "../context/AuthContext";
-import Btn from "../components/Btn";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { LOAD_SEC, timeout } from "../config";
+import { FaSpinner } from "react-icons/fa6";
 
 function Quiz() {
   const [numOfQues, setNumOfQues] = useState(5);
   const [timeLimit, setLimit] = useState(5);
-  const [surahPicked, setSurahPicked] = useState("");
+  const [surahPicked, setSurahPicked] = useState("Al-Faathia");
   const [timerError, setTimerError] = useState("");
 
   const [surahs, setSurahs] = useState([]);
@@ -16,8 +16,10 @@ function Quiz() {
 
   const [loading, setloading] = useState(false);
   const [quizInfo, setQuizInfo] = useState({});
+  const [surahIndex, setSurahIndex] = useState(1);
 
-  const { saveQuizInfo, isAuth } = useContext(AuthContext);
+  const { saveQuizInfo, isAuth, autoAuth } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
@@ -28,7 +30,6 @@ function Quiz() {
         );
         if (!res.ok) throw new Error("Network respons");
         const resultData = await res.json();
-        console.log(resultData.data);
         setSurahs(resultData.data);
       } catch (err) {
         setError(err);
@@ -38,6 +39,10 @@ function Quiz() {
     }
 
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    autoAuth();
   }, []);
 
   function handleNumQuestion(e) {
@@ -78,14 +83,20 @@ function Quiz() {
 
   function handleSelectChange(e) {
     setSurahPicked(e.target.value);
+    setSurahIndex(
+      () => surahs.findIndex((i) => i.englishName === e.target.value) + 1,
+    );
   }
 
-  function handleSubmit(e) {
-    e.preventDefault()
-    const info = { surahPicked, timeLimit, numOfQues };
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const info = { surahPicked, timeLimit, numOfQues, surahIndex };
     setQuizInfo(() => info);
     console.log(info);
     saveQuizInfo(info);
+    setloading(true);
+    await timeout(LOAD_SEC);
+    navigate("/take-quiz/quiz");
   }
 
   return (
@@ -163,8 +174,12 @@ function Quiz() {
           </span>
         </p>
 
-        <button className="quiz__start" disabled={loading} type="submit">
-          Start Quiz
+        <button
+          className="quiz__start"
+          disabled={loading || !surahPicked}
+          type="submit"
+        >
+          Start Quiz {loading ? <FaSpinner className="spinner spinner-md" /> : ''}
         </button>
       </form>
     </div>
