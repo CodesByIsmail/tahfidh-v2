@@ -4,4 +4,4 @@ export function timeout(sec) {
   });
 }
 
-export const LOAD_SEC = 5;
+export const LOAD_SEC = 3;

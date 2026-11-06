@@ -3,19 +3,13 @@ import { AuthContext } from "../context/AuthContext";
 import { useContext, useEffect, useState } from "react";
 import { FaSpinner } from "react-icons/fa6";
 
-
 function QuizEngine() {
   const { quizInfo } = useContext(AuthContext);
   const [surah, setSurah] = useState(quizInfo?.surahPicked || "Al-Faathia");
+  const [ayahs, setAyahs] = useState([]);
   const [quesBank, setQuesBank] = useState(null);
   const [settingUp, setSettingUp] = useState(true);
-
-  useEffect(() => {
-    if (quizInfo?.surahPicked) {
-      setSurah(quizInfo.surahPicked);
-    }
-    console.log(quizInfo);
-  }, [quizInfo]);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     async function fetchAyahs() {
@@ -24,16 +18,41 @@ function QuizEngine() {
           `https://api.qurani.ai/gw/qh/v1/surah/${quizInfo.surahIndex}/quran-uthmani?limit=2000&offset=0`,
         );
         const data = await res.json();
-        console.log(data.data.ayahs.map((ayah) => ayah.text));
+        setAyahs(() => data.data.ayahs.map((ayah) => ayah.text));
       } catch (err) {
         console.log(err.message);
       }
     }
     fetchAyahs();
-  }, [surah]);
+  }, []);
 
-  async function setQuestionBank() {
-    const bank = { questions, options };
+  useEffect(() => {
+    setQuestionBank();
+  }, [ayahs]);
+
+  function setQuestionBank() {
+    const bank = [{ q: "", p: [] }];
+    const possibleQues = ayahs.slice(0, -1);
+    const maxNumQues = possibleQues.length;
+
+    const actualNumOfQues = Math.min(maxNumQues, quizInfo.numOfQues);
+    console.log(
+      "ayahs :",
+      ayahs,
+      "possibleques:",
+      possibleQues,
+      actualNumOfQues,
+    );
+    const questions = possibleQues.slice(0, actualNumOfQues);
+    console.log(questions, bank[0], "herereerer");
+    questions.forEach((q, i) => {
+      bank[i] = { q: q };
+    });
+
+    
+
+    bank.map((b, i) => (b.q = possibleQues[i]));
+    console.log(bank);
   }
 
   return (
