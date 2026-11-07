@@ -19,6 +19,7 @@ function Home() {
       {isAuth && user && (
         <>
           <div className="hero">
+            <span className="arabic__text">السلام عليكم</span>
             <div className="hero__left">
               <h1>AsSalaamu Alaykum {userFirstName}</h1>
               <p>
@@ -133,6 +134,8 @@ function Home() {
         <>
           <div className="hero">
             <div className="hero__left">
+              <span className="arabic__text">السلام عليكم</span>
+
               <h1>Welcome {isAuth && user ? user.fullname : ""}</h1>
               <p className="tag__line">Quran Hifdh Practice</p>
               <h2 className="hero__title">Test what you have memorized</h2>

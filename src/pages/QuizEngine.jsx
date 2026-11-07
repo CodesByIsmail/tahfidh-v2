@@ -11,6 +11,10 @@ function QuizEngine() {
   const [settingUp, setSettingUp] = useState(true);
   const [isReady, setIsReady] = useState(false);
 
+
+  const [curNum, setCurNum] = useState(1);
+  const [numOfQues, setNumOfQues] = useState(5)
+
   useEffect(() => {
     async function fetchAyahs() {
       try {
@@ -36,24 +40,27 @@ function QuizEngine() {
     const maxNumQues = possibleQues.length;
 
     const actualNumOfQues = Math.min(maxNumQues, quizInfo.numOfQues);
-    console.log(
-      "ayahs :",
-      ayahs,
-      "possibleques:",
-      possibleQues,
-      actualNumOfQues,
-    );
+  
+    setNumOfQues(actualNumOfQues)
     const questions = possibleQues.slice(0, actualNumOfQues);
-    console.log(questions, bank[0], "herereerer");
     questions.forEach((q, i) => {
-      bank[i] = { q: q };
+      const ans = ayahs[ayahs.findIndex((a) => a === q) + 1];
+      bank[i] = { q: q, ans };
     });
-
-    
 
     bank.map((b, i) => (b.q = possibleQues[i]));
     console.log(bank);
+    setQuesBank(bank)
+
+
+    
   }
+
+  function setOptions(){
+
+  }
+
+
 
   return (
     <div className="quiz__engine">
@@ -74,22 +81,27 @@ function QuizEngine() {
             </p>
           </div>
           <div className="question__navigators">
-            <span className="question__navigator question__navigator--active">
-              1
-            </span>
-            <span className="question__navigator">2</span>
-            <span className="question__navigator">3</span>
-            <span className="question__navigator">4</span>
-            <span className="question__navigator">5</span>
+            {quesBank &&
+              quesBank.map((_, i) => {
+                return (
+                  <span
+                    className={`question__navigator question__navigator${i+1 === curNum ? "--active" : ""}`}
+                    key={i}
+                  >
+                    {i + 1}
+                  </span>
+                );
+              })
+            }
           </div>
-          <p>Question 1 of 5</p>
+          <p>Question 1 of {numOfQues}</p>
         </div>
       </div>
       {quesBank && (
         <div className="quiz__page">
           <p>What is the next verse?</p>
           <div className="question">
-            <p>inna aaina</p>
+            <p>{quesBank[curNum-1].q}</p>
           </div>
 
           <div className="options">

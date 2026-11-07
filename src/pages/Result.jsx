@@ -1,6 +1,14 @@
 import { Link } from "react-router-dom";
 import "../css/Result.css";
 import { useState } from "react";
+import "@fontsource/noto-naskh-arabic/400.css";
+import "@fontsource/noto-naskh-arabic/600.css";
+// import "@fontsource/amiri-quran/400.css";
+// import "@fontsource/geist-sans/400.css";
+// import "@fontsource/geist-sans/600.css";
+// import "@fontsource/ibm-plex-sans-arabic/400.css";
+// import "@fontsource/ibm-plex-sans-arabic/600.css";
+// import "@fontsource/ibm-plex-sans-arabic/700.css";
 
 function Result() {
   const [reviewQuestions, setReviewQuestions] = useState([
@@ -93,11 +101,11 @@ function Result() {
               <>
                 <div className="answer__div answer__div--yours">
                   <p>Your answer</p>
-                  <p className="your__answer__text"> {yourAns ? yourAns : 'No answer picked'} </p>
+                  <p className="your__answer__text arabic"> {yourAns ? yourAns : 'No answer picked'} </p>
                 </div>
                 <div className="answer__div answer__div--correct">
                   <p>Correct answer</p>
-                  <p className="correct__answer__text">
+                  <p className="correct__answer__text arabic">
                    {correctAns}
                   </p>
                 </div>

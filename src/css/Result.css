@@ -1,3 +1,4 @@
+
 .result-page {
   display: flex;
   flex-direction: column;
@@ -69,6 +70,8 @@
   font-size: 1rem;
   font-weight: 700;
 }
+
+
 
 .review-title {
   margin-top: 0.1rem;
@@ -151,6 +154,23 @@
   align-self: flex-end;
   font-family: serif;
   font-size: 1.1rem;
+}
+
+.your__answer__text.arabic, .correct__answer__text.arabic{
+    font-family: "IBM Plex Sans Arabic", sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.1;
+
+    /* font-family: 'Amiri Quran', serif; */
+
+  /* font-family: 'Geist Sans', 'IBM Plex Sans Arabic', sans-serif;
+   */
+
+  /* font-family: 'IBM Plex Sans Arabic', sans-serif; */
+
+
+
 }
 
 .after__review__buttons {

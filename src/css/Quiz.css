@@ -49,6 +49,7 @@
   background: var(--input-bg);
   color: var(--text);
   font: inherit;
+  cursor: pointer;
 }
 
 .num__ofques {

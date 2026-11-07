@@ -20,6 +20,13 @@
   box-sizing: border-box;
 }
 
+.arabic__text{
+      font-family: "IBM Plex Sans Arabic", sans-serif;
+    font-weight: 500;
+    font-size: 2rem;
+    line-height: 1.1;
+}
+
 .hero__left {
   display: flex;
   flex-direction: column;
